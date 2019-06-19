@@ -1,4 +1,4 @@
-﻿
+
 # Authorization decorators for Express Controllers: an in depth look
 
 ## Liam Tan
@@ -180,11 +180,11 @@ We begin by converting the argument into an array when necessary. With this, we 
 
 And that's all she wrote! I have comfortably even this simple implementation in production systems, scaling and supporting many thousands of users. The clarity of code, especially once obfuscated and implemented across all of your controllers offers immense value over the lifespan of your project.
 
-![Protected Decorator in a production system](https://picasaweb.google.com/104704203622968957824/6704220352185573281#6704220350619225730 "Protected Decorator in a production system")
+![Protected decorator in production system](https://lh3.googleusercontent.com/MaxSbi6-p4Zm_CZxhCubxEVacfcc69a9vtbsHg-_oQcKnsp1Pj5AMN4edAsqDDjq40L94XznH-jL)
  
 This is a simple solution most applicable when your application only calls for broad access control, with relatively static roles associated with users, however in larger scale applications, the need for more granular control might be necessary. Enter: HRBAC (Hierarchical Role Based Access Control).
 
-![Simple HRBAC diagram](https://picasaweb.google.com/104704203622968957824/6704221871747950785#6704221875668680226)
+![enter image description here](https://lh3.googleusercontent.com/LdzvG93lA74Yk6gGHuwdU0cnQFnwCcanutPv6Tmqa4QnHqugobh0pyGpfFFDbyLwXYwcyDNYydhl)
 
 The core concept of HRBAC is that roles associated with a user don't dictate directly what they have control over. Rather, each role is comprised of several *scopes*, which allow granular control over resources. Finally, scopes are *hierarchical*, meaning that some scopes can be comprised of others, granting access to large areas of resources. Let's begin with a really simple conceptual hierarchy of our application's scopes:
 
@@ -361,7 +361,7 @@ And you're done! You now have a decorator function that can be used for granular
 
 Decorators are awesome. You can find endless places to make use of them. When stacking decorators, a great level of clarity about the synchronous procedures happening before your method can be achieved. Mimicking the above implementation, take a quick look at how we can continue to stack decorators to not just authorize a user, but validate their payload:
 
-![Stacking decorators](https://picasaweb.google.com/104704203622968957824/6704229514801097281#6704229515663680130) 
+![enter image description here](https://lh3.googleusercontent.com/7JGwKs1kxCZtMDxNYvQgLB7uSC2IjUL2haQ6p0-cu6jO8VrMFG8pBOUllqhiasp8vxdDlPoX749P)
 
 If that was TMI, only take the bits you need. The idea of decorators is to unencumbered you, so if you ever feel like they are having the adverse effect, maybe reconsider your implementation. I've made all of the above code available in a repo you can find [here]. Go brew another cup of tea, and give implementing your auth layer in decorator format!
 
