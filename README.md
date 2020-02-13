@@ -3,7 +3,7 @@
 
 ## Liam Tan
 
-Express offers the modern JS developer a lot of out of the box utility when developing web services. The Express router is a powerful tool for handling requests, triggering additional actions through middleware, and error handling, however there are some areas where Express leaves a lot to be desired. One unfortunate bi-product of Express' global middleware routing pattern is a tangible lack of granular access control over resources throughout your API. Recently, I have fallen in love with a new way to implement an authorization layer with any with as much specificity as you need. Combined from a solid Route-Controller-Service design pattern that I talk about extensively [here], decorator functions go a long way into solving this problem.
+Express offers the modern JS developer a lot of out of the box utility when developing web services. The Express router is a powerful tool for handling requests, triggering additional actions through middleware, and error handling, however there are some areas where Express leaves a lot to be desired. One unfortunate bi-product of Express' global middleware routing pattern is a lack of granular access control over resources throughout your API. Recently, I have fallen in love with a new way to implement an authorization layer with any with as much specificity as you need. Combined from a solid Route-Controller-Service design pattern, decorator functions go a long way into solving this problem.
 
 Decorators are nothing new. In fact, you have the tried and true “Design Patterns: Elements of Reusable Object-Oriented Software (1994)” to thank for the first formal introduction of the decorator design pattern. While other strictly Object Oriented Programming languages such as Java picked up decorators along the way, TypeScript has only recently answered the call for us JS devs, and now we even have a [Stage 2 proposal for native decorator support](https://github.com/tc39/proposal-decorators) in the works.
 
@@ -35,7 +35,7 @@ const PreventPourIfTooHot = (maximumTemp: number): Function => (target: any, pro
 		const [ teaTemp ] = args;
 		if(teaTemp > maximumTemp) {
 			throw {
-				code: 814,
+				code: 418,
 				message: "The server refuses to pour tea to hot!"
 			}
 		}
@@ -107,8 +107,7 @@ export  const  Protected  = (roles?:  ERole  |  ERole[]):  Function  => (target:
 		//  ...
 ```
 
-We begin by first validating that the developer (you!) have decorated an appropriate function. In this context, we require the decorated method to be a controller action, with it's first argument being Express' `Request` class. In the event that this isn't the case, an error is raised with an appropriate message (**note** *if you're at all interested in the particular global error handling pattern used in the above example to raise custom errors, and handle async functions, see my article [here]*).
-
+We begin by first validating that the developer (you!) have decorated an appropriate function. In this context, we require the decorated method to be a controller action, with it's first argument being Express' `Request` class. In the event that this isn't the case, an error is raised with an appropriate message.
 We can further typecheck the additional arguments passed into the actual decorator function (in this instance, the required roles) to ensure that we can proceed:
 
 ```
@@ -227,7 +226,7 @@ class  BinTree<T> {
 
 // Implemented Binary tree, to store heirarchical information of scopes. Has custom traversal method
 // that returns the target node value, and the parent node values.
-class  HRBACBinTree  extends  BinTree<EScope> {
+class  HrbacBinTree  extends  BinTree<EScope> {
 	constructor(root:  TreeNode<EScope>) {
 		super(root);
 	}
@@ -255,7 +254,7 @@ class  HRBACBinTree  extends  BinTree<EScope> {
 }
 
 // Postorder array of scopes, with a numerical value. These are to be mapped to an instance
-// of HRBACBinTree
+// of HrbacBinTree
 enum  EScope {
 	ORG_READ_SELF  =  0,
 	ORG_READ_ALL  =  1,
@@ -273,8 +272,8 @@ enum  EScope {
 	SCHOOL_WRITE_ALL  =  13,
 	SCHOOL_WRITE_OTHER  =  14,
 }
-// The implementation of HRBACBinTree, with the appropriate heirarchical mapping.
-const  HRBAC_BINTREE:  HRBACBinTree  =  new  HRBACBinTree(
+// The implementation of HrbacBinTree, with the appropriate heirarchical mapping.
+const  HRBAC_BINTREE:  HrbacBinTree  =  new  HrbacBinTree(
 	new  TreeNode(EScope.ALL,
 		new  TreeNode(EScope.ORG_ALL,
 			new  TreeNode(EScope.ORG_READ_ALL,
@@ -363,7 +362,7 @@ Decorators are awesome. You can find endless places to make use of them. When st
 
 ![enter image description here](https://lh3.googleusercontent.com/7JGwKs1kxCZtMDxNYvQgLB7uSC2IjUL2haQ6p0-cu6jO8VrMFG8pBOUllqhiasp8vxdDlPoX749P)
 
-If that was TMI, only take the bits you need. The idea of decorators is to unencumbered you, so if you ever feel like they are having the adverse effect, maybe reconsider your implementation. I've made all of the above code available in a repo you can find [here]. Go brew another cup of tea, and give implementing your auth layer in decorator format!
+If that was TMI, only take the bits you need. The idea of decorators is to unencumbered you, so if you ever feel like they are having the adverse effect, maybe reconsider your implementation. I've made all of the above code available in a repo you can find above. Go brew another cup of tea, and give implementing your auth layer in decorator format!
 
 
 
