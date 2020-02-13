@@ -7,9 +7,6 @@ declare enum ERole {
     ORG = 'organisation',
 }
 
-
-
-
 declare interface ICognitoJWTTokenDecoded {
     "custom:role": ERole;
 }
